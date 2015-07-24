@@ -40,7 +40,7 @@ sendIRC = 1                     # 1 = send, 0 = no send (for testing)
  #                              #
 ################################
 
-import Blender
+import bpy
 import socket
 from time import sleep
 
@@ -52,19 +52,19 @@ def IRCConnect(toNick, fromNick, ircMsg, network, port):
     try:
         IRCsocket = socket.socket ( socket.AF_INET, socket.SOCK_STREAM )
 
-    except socket.error, msg:
-        print msg
+    except (socket.error, msg):
+        print (msg)
         carryon = False
 
     if carryon == True:
         try:
             IRCsocket.connect ((network, port))
 
-        except socket.error, msg:
+        except (socket.error, msg):
             IRCsocket.close()
             IRCsocket = None
             carryon = False
-            print msg
+            print (msg)
 
     if carryon == True:
         try:
@@ -79,13 +79,13 @@ def IRCConnect(toNick, fromNick, ircMsg, network, port):
 
             IRCsocket.close()
 
-        except socket.error, (errno, msg):
-            print "IRC Exception %s %s while receiving "%(errno,msg)
+        except (socket.error, (errno, msg)):
+            print ("IRC Exception %s %s while receiving "%(errno,msg))
             carryon=False
 
         else:
-            print "IRC message sent:"
-            print "["+ircMsg+"]"
+            print ("IRC message sent:")
+            print ("["+ircMsg+"]")
 
 
     ################################
@@ -94,15 +94,15 @@ def IRCConnect(toNick, fromNick, ircMsg, network, port):
  #                              #
 ################################
 
-if Blender.bylink:
-    curFrame = Blender.Get("curframe")
-    print curFrame
+if bpy.bylink: #O Blender não reconhece o módulo bylink (não sei o que fazer com ele)
+    curFrame = bpy.Get("curframe")
+    print (curFrame)
     if curFrame in frames:
         ircMsg += str(curFrame)
         if (sendIRC == 1):
             IRCConnect(toNick, fromNick, ircMsg, network, port)
         else:
-            print "Working offline"
+            print ("Working offline")
 
 
 # ######################################
