@@ -50,7 +50,7 @@ def sendEmail(curFrame):
 
     emailText = "Hey, I'm sending this email from Blender.\n\n"\
                 "Cool !!!!\n\n"\
-                "It¿¥s a report of the progress of a render, a particle baking,\n"\
+                "It is a report of the progress of a render, a particle baking,\n"\
                 "a fluid simulation baking or other use I didn't think"\
                 "\n\n"\
                 "See you\n"\
@@ -104,7 +104,7 @@ def sendEmail(curFrame):
 
             session.close()
         except:
-            print "Fail to send the email"
+            print ("Fail to send the email")
 
         if smtpResult:
             errstr = ""
@@ -117,8 +117,8 @@ def sendEmail(curFrame):
         %s""" % (recip, smtpResult[recip][0], smtpResult[recip][1], errstr)
             raise smtplib.SMTPException, errstr
 
-        print "Email message sent:"
-        print "["+emailMsg+"]"
+        print ("Email message sent:")
+        print ("["+emailMsg+"]")
 
     ################################
    #                              #
@@ -126,9 +126,9 @@ def sendEmail(curFrame):
  #                              #
 ################################
 
-import Blender
+import bpy
 
-if Blender.bylink:
-    curFrame = Blender.Get("curframe")
+if bpy.bylink:
+    curFrame = bpy.Get("curframe")
     if curFrame in frames:
         sendEmail(curFrame)
